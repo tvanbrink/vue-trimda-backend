@@ -24,6 +24,7 @@ const windowResizeHandler = () => {
 };
 
 onMounted(() => {
+  windowResizeHandler();
   window.addEventListener("resize", windowResizeHandler);
 });
 </script>
