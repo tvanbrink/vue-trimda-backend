@@ -40,7 +40,6 @@ const items = ref([
 <template>
   <div>
     <Button
-      class="hidden md:block"
       label="Submit"
       @click="toggle"
       size="small"

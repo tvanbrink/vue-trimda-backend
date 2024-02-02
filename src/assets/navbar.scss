@@ -28,21 +28,21 @@ $layout-breakpoint-sm: 767px;
     }
 }
 
-@media (max-width: $layout-breakpoint-sm) {
-    #navbar {
-        .p-toolbar {
-            padding: 0;
+// @media (max-width: $layout-breakpoint-sm) {
+//     #navbar {
+//         .p-toolbar {
+//             padding: 0;
 
-            .p-toolbar-group-start {
-                width: 100%;
-            }
+//             .p-toolbar-group-start {
+//                 width: 100%;
+//             }
 
-            .brand {
-                width: 100%;
-            }
-        }
-    }
-}
+//             .brand {
+//                 width: 100%;
+//             }
+//         }
+//     }
+// }
 
 @media (min-width: $layout-breakpoint-sm) {
     #navbar {
