@@ -30,7 +30,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="navigatie" v-if="route.name !== 'Page not found'">
+  <div
+    id="navigatie"
+    v-if="route.name !== 'Page not found'"
+    class="fixed w-full"
+  >
     <NavDesktop v-if="!isMobile" @sidebarOpen="onSidebarOpenHandler" />
     <NavMobile v-else @sidebarOpen="onSidebarOpenHandler" />
 

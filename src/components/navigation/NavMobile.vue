@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Toolbar from "primevue/toolbar";
 import Button from "primevue/button";
-// import SettingsMenu from "./SettingsMenu.vue";
+import SettingsMenu from "./SettingsMenu.vue";
 
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits<{
