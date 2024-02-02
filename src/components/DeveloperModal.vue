@@ -1,0 +1,59 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import Button from "primevue/button";
+import Dialog from "primevue/dialog";
+import Accordion from "primevue/accordion";
+import AccordionTab from "primevue/accordiontab";
+
+import { useAuth0 } from "@auth0/auth0-vue";
+
+const { user } = useAuth0();
+
+const visible = ref(false);
+</script>
+
+<template>
+  <div>
+    <Button @click="visible = true"><i class="pi pi-code"></i></Button>
+
+    <!-- eslint-disable vue/no-v-model-argument -->
+    <Dialog
+      v-model:visible="visible"
+      maximizable
+      modal
+      header="Developer insight"
+      :style="{ width: '50rem' }"
+      :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
+    >
+      <!-- eslint-enable vue/no-v-model-argument -->
+      <Accordion :activeIndex="0">
+        <AccordionTab header="User object">
+          <p class="m-0">
+            {{ user }}
+          </p>
+        </AccordionTab>
+      </Accordion>
+    </Dialog>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+Button {
+  background-color: var(--surface-200) !important;
+  color: var(--surface-700) !important;
+  border-width: 0;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  padding: 0.75rem;
+  // width: 40px;
+  // height: 40px;
+  &:hover {
+    background-color: var(--surface-300) !important;
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+</style>
