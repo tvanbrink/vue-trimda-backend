@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useAuth0 } from "@auth0/auth0-vue";
 import LoadingView from "./pages/LoadingView.vue";
-import NavBar from "./components/NavBar/NavBar.vue";
+import Navigation from "./components/navigation/NavBar.vue";
 import DeveloperModal from "./components/DeveloperModal.vue";
 import Toast from "primevue/toast";
 import { onMounted, ref, watch } from "vue";
@@ -34,7 +34,7 @@ onMounted(() => {
   <div>
     <LoadingView v-if="loading" />
 
-    <NavBar v-if="!loading && isAuthenticated" />
+    <Navigation v-if="!loading && isAuthenticated" />
 
     <div id="content" v-if="!loading && isAuthenticated">
       <router-view />

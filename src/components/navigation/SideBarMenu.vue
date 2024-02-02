@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import router from "@/router";
+import router from "../../router";
 import { ref } from "vue";
 
 const emit = defineEmits<{
@@ -16,17 +16,17 @@ const handleClick = (item: any) => {
 
 const items = ref([
   {
-    name: "agenda",
+    name: "overzicht",
     to: "/",
-    routeName: "agenda",
-    icon: "pi pi-calendar",
+    routeName: "overzicht",
+    icon: "pi pi-home",
   },
-  {
-    name: "klanten",
-    to: "klanten",
-    icon: "pi pi-user",
-    routeName: "klanten",
-  },
+  //   {
+  //     name: "klanten",
+  //     to: "klanten",
+  //     icon: "pi pi-user",
+  //     routeName: "klanten",
+  //   },
 ]);
 </script>
 
