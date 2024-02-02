@@ -1,18 +1,7 @@
-/* @import './base.css'; */
+@import './navbar.scss';
+@import './sidebar.scss';
 
 body {
     margin:0;
     background-color: var(--surface-50) !important;
-}
-
-.p-sidebar {
-    box-shadow: none;
-
-    .p-sidebar-header {
-        padding: 1rem;
-    }
-
-    .p-sidebar-content {
-        padding: 0 0 1.25rem 0;
-    }
 }

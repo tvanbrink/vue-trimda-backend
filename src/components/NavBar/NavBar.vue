@@ -49,7 +49,7 @@ const onNavigateHandler = () => {
               </div>
             </div>
           </div>
-          <div class="pl-4 page-title">{{ route.name }}</div>
+          <div class="pl-4 page-title hidden md:block">{{ route.name }}</div>
         </template>
 
         <!-- <template #center>center</template> -->
@@ -75,31 +75,3 @@ const onNavigateHandler = () => {
     </Sidebar>
   </div>
 </template>
-
-<style lang="scss">
-#navbar .p-toolbar {
-  border-radius: 0;
-  border-width: 0 0 0 0;
-  border-color: var(--surface-100);
-  padding: 0 1.25rem 0 0;
-  background-color: #ffffff;
-
-  .brand {
-    padding: 1rem;
-    background-color: var(--primary-color) !important;
-    width: 255px;
-
-    a {
-      color: white;
-    }
-
-    .p-button-icon {
-      color: white;
-    }
-  }
-
-  .page-title {
-    text-transform: capitalize;
-  }
-}
-</style>
