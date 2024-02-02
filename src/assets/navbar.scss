@@ -1,53 +1,41 @@
 $layout-breakpoint-sm: 767px;
 
 #navbar {
-    .p-toolbar {
-        border-radius: 0;
-        border-width: 0;
-        border-color: var(--surface-100);
-        background-color: #ffffff;
-        gap: 0;
+    &.desktop {
+        .p-toolbar {
+            border-radius: 0;
+            border-width: 0;
+            border-color: var(--surface-100);
+            background-color: #ffffff;
+            gap: 0;
+            padding: 0 1.25rem 0 0;
 
-        .brand {
-            padding: 1rem;
-            background-color: var(--primary-color) !important;
-            width: 255px;
+            .brand {
+                padding: 1rem;
+                background-color: var(--primary-color) !important;
+                width: 255px;
 
-            a {
-                color: white;
+                a {
+                    color: white;
+                }
+
+                .p-button-icon {
+                    color: white;
+                }
             }
 
-            .p-button-icon {
-                color: white;
+            .page-title {
+                text-transform: capitalize;
             }
-        }
-
-        .page-title {
-            text-transform: capitalize;
         }
     }
-}
 
-// @media (max-width: $layout-breakpoint-sm) {
-//     #navbar {
-//         .p-toolbar {
-//             padding: 0;
-
-//             .p-toolbar-group-start {
-//                 width: 100%;
-//             }
-
-//             .brand {
-//                 width: 100%;
-//             }
-//         }
-//     }
-// }
-
-@media (min-width: $layout-breakpoint-sm) {
-    #navbar {
+    &.mobile {
         .p-toolbar {
-            padding: 0 1.25rem 0 0;
+            .p-toolbar-group-center {
+                position: fixed;
+                left: calc(50% - 35px);
+            }
         }
     }
 }
