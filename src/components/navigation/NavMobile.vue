@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Toolbar from "primevue/toolbar";
+// import Toolbar from "primevue/toolbar";
 import Button from "primevue/button";
 import SettingsMenu from "./SettingsMenu.vue";
 
@@ -16,8 +16,10 @@ const openSidebarHandler = () => {
 
 <template>
   <div id="navbar" class="mobile">
-    <Toolbar>
-      <template #start>
+    <div
+      class="flex justify-content-between flex-wrap bg-primary text-white fixed w-full"
+    >
+      <div class="flex align-items-center justify-content-center">
         <Button
           @click="openSidebarHandler"
           icon="pi pi-bars"
@@ -26,18 +28,29 @@ const openSidebarHandler = () => {
           rounded
           aria-label="Bookmark"
           style="width: 2rem; height: 2rem"
+          class="text-white"
         />
-      </template>
-
-      <template #center>
+      </div>
+      <div class="brand flex align-items-center justify-content-center">
         <router-link class="no-underline font-semibold text-color-white" to="/"
           >vanbr.ink</router-link
         >
-      </template>
-
-      <template #end>
+      </div>
+      <div class="flex align-items-center justify-content-center">
         <SettingsMenu />
-      </template>
-    </Toolbar>
+      </div>
+    </div>
   </div>
 </template>
+
+<style scoped>
+.brand {
+  position: fixed;
+  left: calc(50% - 36px);
+  top: 20px;
+}
+
+.flex-wrap {
+  height: 64px;
+}
+</style>
