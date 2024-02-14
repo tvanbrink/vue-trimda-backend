@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import Button from "primevue/button";
 import Dialog from "primevue/dialog";
 import Accordion from "primevue/accordion";
@@ -7,9 +7,14 @@ import AccordionTab from "primevue/accordiontab";
 
 import { useAuth0 } from "@auth0/auth0-vue";
 
-const { user } = useAuth0();
+const { user, getAccessTokenSilently } = useAuth0();
 
 const visible = ref(false);
+const token = ref({});
+
+onMounted(async () => {
+  token.value = await getAccessTokenSilently();
+});
 </script>
 
 <template>
@@ -26,11 +31,14 @@ const visible = ref(false);
       :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
     >
       <!-- eslint-enable vue/no-v-model-argument -->
-      <Accordion :activeIndex="0">
+      <Accordion>
         <AccordionTab header="User object">
           <p class="m-0">
             {{ user }}
           </p>
+        </AccordionTab>
+        <AccordionTab header="Auth0 object">
+          {{ token }}
         </AccordionTab>
       </Accordion>
     </Dialog>
@@ -55,5 +63,8 @@ Button {
   &:focus {
     box-shadow: none;
   }
+}
+AccordionTab {
+  word-wrap: break-word;
 }
 </style>
