@@ -1,14 +1,11 @@
 <script setup lang="ts">
-// import Button from 'primevue/button'
-// import { useToast } from 'primevue/usetoast'
+import { useAuth0 } from "@auth0/auth0-vue";
 
-// const toast = useToast()
-
-// const show = () => {
-//   toast.add({ severity: 'info', detail: 'Message Content' })
-// }
+const { user } = useAuth0();
 </script>
 
 <template>
-  <div></div>
+  <div class="flex justify-content-center flex-wrap pt-5">
+    <div style="max-width: 500px">{{ user }}</div>
+  </div>
 </template>
