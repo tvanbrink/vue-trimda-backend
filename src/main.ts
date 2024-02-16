@@ -5,6 +5,9 @@ import router from "./router";
 import PrimeVue from "primevue/config";
 import ToastService from "primevue/toastservice";
 
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap";
+
 import "primevue/resources/themes/lara-light-green/theme.css";
 import "/node_modules/primeflex/primeflex.css";
 import "primeicons/primeicons.css";

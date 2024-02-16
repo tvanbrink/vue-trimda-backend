@@ -36,7 +36,7 @@ onMounted(() => {
 
     <Navigation v-if="!loading && isAuthenticated" />
 
-    <div id="content" v-if="!loading && isAuthenticated">
+    <div id="content" v-if="!loading && isAuthenticated" class="px-3">
       <router-view />
     </div>
 
