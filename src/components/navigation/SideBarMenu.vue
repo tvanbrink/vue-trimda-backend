@@ -21,12 +21,12 @@ const items = ref([
     routeName: "overzicht",
     icon: "pi pi-home",
   },
-  //   {
-  //     name: "klanten",
-  //     to: "klanten",
-  //     icon: "pi pi-user",
-  //     routeName: "klanten",
-  //   },
+  {
+    name: "Inkomsten & Uitgaven",
+    to: "expenses",
+    icon: "pi pi-book",
+    routeName: "expenses",
+  },
 ]);
 </script>
 

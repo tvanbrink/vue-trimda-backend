@@ -1,8 +1,20 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="grid grid-nogutter">
+  <div class="grid grid-nogutter pt-4">
     <div class="col md:col-6 md:col-offset-3">
+      <div class="grid">
+        <div class="col-12 md:col-4">
+          <div class="text-center p-8 border-round-sm bg-white font-bold">
+            1
+          </div>
+        </div>
+        <div class="col-12 md:col">
+          <div class="text-center p-8 border-round-sm bg-white font-bold">
+            3
+          </div>
+        </div>
+      </div>
       <h2>What is Lorem Ipsum?</h2>
       <p>
         Lorem Ipsum is simply dummy text of the printing and typesetting

@@ -18,6 +18,18 @@ const router = createRouter({
       beforeEnter: authGuard,
     },
     {
+      path: "/expenses",
+      name: "Inkomsten & Uitgaven",
+      component: () => import("../pages/ExpensesView.vue"),
+      beforeEnter: authGuard,
+    },
+    {
+      path: "/test",
+      name: "test",
+      component: () => import("../pages/TestVue.vue"),
+      beforeEnter: authGuard,
+    },
+    {
       path: "/page-not-found",
       name: "Page not found",
       component: () => import("../pages/PageNotFoundView.vue"),

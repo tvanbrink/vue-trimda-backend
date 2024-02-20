@@ -32,12 +32,12 @@ onMounted(async () => {
     >
       <!-- eslint-enable vue/no-v-model-argument -->
       <Accordion>
-        <AccordionTab header="User object">
+        <AccordionTab header="User object (Auth0)">
           <p class="m-0">
             {{ user }}
           </p>
         </AccordionTab>
-        <AccordionTab header="Auth0 object">
+        <AccordionTab header="User Jwt">
           {{ token }}
         </AccordionTab>
       </Accordion>
