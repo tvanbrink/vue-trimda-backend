@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import Card from "primevue/card";
 import ButtonIcon from "../buttons/ButtonIcon.vue";
+
+const clickRefreshHandler = () => {
+  alert("Ververs de budgetten dan!");
+};
 </script>
 
 <template>
@@ -16,8 +20,8 @@ import ButtonIcon from "../buttons/ButtonIcon.vue";
         <div class="flex align-items-center justify-content-center">
           <ButtonIcon
             icon="pi pi-sync"
-            title="Importeer mutaties"
-            @click="clickImportHandler"
+            title="Ververs budgetten"
+            @click="clickRefreshHandler"
           />
         </div>
       </div>

@@ -12,8 +12,6 @@ defineProps<{
     class="p-button-icon-custom"
     type="button"
     :icon="icon"
-    aria-haspopup="true"
-    aria-controls="overlay_menu"
     :title="title"
   />
 </template>
