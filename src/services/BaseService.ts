@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { auth0 } from "../plugins/auth0";
 
-export interface IBaseRepository<T> {
+export interface IBaseService<T> {
   get(id: any): Promise<AxiosResponse<any, any>>;
   getAll(): Promise<AxiosResponse<any, any>>;
   create(id: any, item: T): Promise<AxiosResponse<any, any>>;
@@ -26,7 +26,7 @@ const transform = (response: AxiosResponse): Promise<ApiResponse<any>> => {
   });
 };
 
-export abstract class BaseRepository<T> implements IBaseRepository<T> {
+export abstract class BaseService<T> implements IBaseService<T> {
   protected collection: string | undefined;
 
   private url(id?: string): string {

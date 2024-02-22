@@ -1,12 +1,10 @@
 import axios, { AxiosResponse } from "axios";
 import { defineStore } from "pinia";
-import UserRepository, { User } from "../repositories/UserRepository";
-import SettingsRepository, {
-  Settings,
-} from "../repositories/SettingsRepository";
+import UserService, { User } from "../services/UserService";
+import SettingsService, { Settings } from "../services/SettingsService";
 
-const userRepo: UserRepository = new UserRepository();
-const settingsRepo: SettingsRepository = new SettingsRepository();
+const userRepo: UserService = new UserService();
+const settingsRepo: SettingsService = new SettingsService();
 
 export const useAppStore = defineStore("app", {
   state: () => ({

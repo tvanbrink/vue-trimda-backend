@@ -1,4 +1,4 @@
-import { BaseRepository } from "./BaseRepository";
+import { BaseService } from "./BaseService";
 
 export interface User {
   id: string;
@@ -14,7 +14,7 @@ export interface Account {
   primary: boolean;
 }
 
-export default class UserRepository extends BaseRepository<User> {
+export default class UserService extends BaseService<User> {
   collection = "user";
 
   get(id?: string) {

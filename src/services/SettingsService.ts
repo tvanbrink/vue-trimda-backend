@@ -1,11 +1,11 @@
-import { BaseRepository } from "./BaseRepository";
+import { BaseService } from "./BaseService";
 
 export interface Settings {
   id: string;
   test: boolean;
 }
 
-export default class SettingsRepository extends BaseRepository<Settings> {
+export default class SettingsService extends BaseService<Settings> {
   collection = "settings";
 
   get(id: string) {
