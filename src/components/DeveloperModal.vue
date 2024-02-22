@@ -4,8 +4,10 @@ import Button from "primevue/button";
 import Dialog from "primevue/dialog";
 import Accordion from "primevue/accordion";
 import AccordionTab from "primevue/accordiontab";
+import { useAppStore } from "../store/app";
 
 import { useAuth0 } from "@auth0/auth0-vue";
+const app = useAppStore();
 
 const { user, getAccessTokenSilently } = useAuth0();
 
@@ -39,6 +41,14 @@ onMounted(async () => {
         </AccordionTab>
         <AccordionTab header="User Jwt">
           {{ token }}
+        </AccordionTab>
+        <AccordionTab header="User object (DB)">
+          <p class="m-0">
+            {{ app.getUser }}
+          </p>
+        </AccordionTab>
+        <AccordionTab header="User settings (DB)">
+          {{ app.getSettings }}
         </AccordionTab>
       </Accordion>
     </Dialog>
