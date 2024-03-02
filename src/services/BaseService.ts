@@ -15,16 +15,18 @@ export class ApiResponse<T> {
   errors: any;
 }
 
-const transform = (response: AxiosResponse): Promise<ApiResponse<any>> => {
-  return new Promise((resolve, reject) => {
-    const result: ApiResponse<any> = {
-      data: response.data,
-      succeeded: response.status === 200,
-      errors: response.data.errors,
-    };
-    resolve(result);
-  });
-};
+// TODO: verwijder transform functie
+
+// const transform = (response: AxiosResponse): Promise<ApiResponse<any>> => {
+//   return new Promise((resolve, reject) => {
+//     const result: ApiResponse<any> = {
+//       data: response.data,
+//       succeeded: response.status === 200,
+//       errors: response.data.errors,
+//     };
+//     resolve(result);
+//   });
+// };
 
 export abstract class BaseService<T> implements IBaseService<T> {
   protected collection: string | undefined;
@@ -62,8 +64,8 @@ export abstract class BaseService<T> implements IBaseService<T> {
     return await this.request("get", this.url());
   }
 
-  public async create(id: string, item: T): Promise<AxiosResponse<any, any>> {
-    return await this.request("post", this.url(id), item);
+  public async create(item: T): Promise<AxiosResponse<any, any>> {
+    return await this.request("post", this.url(), item);
   }
 
   public async update(id: string, item: T): Promise<AxiosResponse<any, any>> {

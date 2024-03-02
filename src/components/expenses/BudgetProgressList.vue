@@ -1,6 +1,18 @@
 <script setup lang="ts">
 import Card from "primevue/card";
 import ButtonIcon from "../buttons/ButtonIcon.vue";
+import BudgetProgressItem from "./BudgetProgressItem.vue";
+import BudgetItem from "../../models/BudgetItem";
+
+const budgetItems: BudgetItem[] = [
+  {
+    id: "1",
+    description: "Verzekeringen",
+    targetValue: 100,
+    consumedValue: 25,
+    consumedPercentage: 25,
+  },
+];
 
 const clickRefreshHandler = () => {
   alert("Ververs de budgetten dan!");
@@ -28,7 +40,11 @@ const clickRefreshHandler = () => {
     </template>
     <!-- <template #subtitle>Card subtitle</template> -->
     <template #content>
-      <!-- <p class="m-0">Card</p> -->
+      <ul class="list-none p-0">
+        <li v-for="item in budgetItems" v-bind:key="item.id">
+          <BudgetProgressItem :item="item" />
+        </li>
+      </ul>
     </template>
     <!-- <template #footer>
           <div class="flex gap-3 mt-1">
