@@ -20,3 +20,39 @@
         }
     }
 }
+
+.p-fileupload {
+    .p-button {
+        background-color: var(--surface-100) !important;
+        color: var(--surface-700) !important;
+        border-width: 0;
+        width: auto;
+        padding: 0.5rem 0.75rem 0.5rem 0.75rem;
+        font-size: 0.75rem;
+
+        &:hover {
+            background-color: var(--surface-200) !important;
+        }
+    
+        &:focus {
+            box-shadow: none;
+        }
+    
+        .p-button-icon {
+            font-size: 0.75rem;
+        }
+
+        .p-button-icon-left {
+            margin:0;
+        }
+
+        .p-icon {
+            width: auto;
+            height: 0.8rem;
+        }
+
+        .p-button-label {
+            display: none;
+        }
+    }    
+}

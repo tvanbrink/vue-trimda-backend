@@ -1,0 +1,129 @@
+<script setup lang="ts">
+import XLSX from "xlsx";
+// import ButtonIcon from "../buttons/ButtonIcon.vue";
+import FileUpload from "primevue/fileupload";
+import Dialog from "primevue/dialog";
+import Button from "primevue/button";
+import { ref } from "vue";
+
+const visible = ref(false);
+const canSave = ref(true);
+const mutations = ref([]);
+
+// const showModal = () => {
+//   visible.value = true;
+// };
+
+const closeModal = () => {
+  visible.value = false;
+};
+
+const onUpload = async (event: any) => {
+  const file = event.files[0];
+  mutations.value = [];
+
+  visible.value = true;
+
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      if (e.target) {
+        /* Parse data */
+        const bstr = e.target.result;
+
+        const wb = XLSX.read(bstr, { type: "binary" });
+
+        /* Get first worksheet */
+        const wsname = wb.SheetNames[0];
+        const ws = wb.Sheets[wsname];
+
+        /* Convert array of arrays */
+        const data: any[][] = XLSX.utils.sheet_to_json(ws, { header: 1 });
+
+        data.forEach((mutation, i) => {
+          if (i !== 0) {
+            const _mutation = {
+              accountId: null,
+              currency: null,
+              transactionDate: null,
+              interestDate: null,
+              startingSaldo: null,
+              endingSaldo: null,
+              ammount: null,
+              description: null,
+            };
+            _mutation.accountId = mutation[0];
+            _mutation.currency = mutation[1];
+            _mutation.transactionDate = mutation[2];
+            _mutation.interestDate = mutation[3];
+            _mutation.startingSaldo = mutation[4];
+            _mutation.endingSaldo = mutation[5];
+            _mutation.ammount = mutation[6];
+            _mutation.description = mutation[7];
+
+            console.log(i, _mutation);
+
+            mutations.value.push(_mutation as never);
+          }
+        });
+      }
+    };
+
+    reader.readAsArrayBuffer(file);
+  }
+};
+</script>
+
+<template>
+  <div>
+    <!-- <ButtonIcon
+      icon="pi pi-upload"
+      title="Importeer mutaties"
+      @click="showModal"
+    /> -->
+
+    <FileUpload
+      mode="basic"
+      accept=".xls"
+      :maxFileSize="1000000"
+      customUpload
+      @uploader="onUpload"
+      :auto="true"
+      :multiple="false"
+      chooseLabel=""
+      :showCancelButton="false"
+      :showUploadButton="false"
+    />
+
+    <!-- eslint-disable vue/no-v-model-argument -->
+    <Dialog
+      v-model:visible="visible"
+      modal
+      header="Importeer mutaties"
+      :style="{ width: '30rem' }"
+      :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
+      position="top"
+      :closable="false"
+      :dismissableMask="false"
+      :closeOnEscape="false"
+    >
+      {{ mutations }}
+
+      <template #footer>
+        <Button
+          label="Annuleer"
+          text
+          severity="secondary"
+          @click="closeModal"
+        />
+        <Button
+          label="Opslaan"
+          severity="primary"
+          @click="closeModal"
+          :disabled="canSave"
+        />
+      </template>
+    </Dialog>
+  </div>
+</template>

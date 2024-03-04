@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import Card from "primevue/card";
-import ButtonIcon from "../buttons/ButtonIcon.vue";
+import ImportModal from "./ImportModal.vue";
+// import { ref } from "vue";
 
-const clickImportHandler = () => {
-  alert("Importeer dan!");
-};
+// let visible: Boolean = true;
+
+// const clickImportHandler = () => {
+//   visible = true;
+// };
 </script>
 
 <template>
@@ -18,11 +21,7 @@ const clickImportHandler = () => {
           Mutaties
         </div>
         <div class="flex align-items-center justify-content-center">
-          <ButtonIcon
-            icon="pi pi-upload"
-            title="Importeer mutaties"
-            @click="clickImportHandler"
-          />
+          <ImportModal />
         </div>
       </div>
     </template>
