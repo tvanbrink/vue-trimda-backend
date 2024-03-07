@@ -64,8 +64,8 @@ export abstract class BaseService<T> implements IBaseService<T> {
     return await this.request("get", this.url());
   }
 
-  public async create(item: T): Promise<AxiosResponse<any, any>> {
-    return await this.request("post", this.url(), item);
+  public async create(data: T | T[]): Promise<AxiosResponse<any, any>> {
+    return await this.request("post", this.url(), data);
   }
 
   public async update(id: string, item: T): Promise<AxiosResponse<any, any>> {

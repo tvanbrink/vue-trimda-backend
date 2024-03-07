@@ -1,88 +1,76 @@
 <script setup lang="ts">
-import XLSX from "xlsx";
-// import ButtonIcon from "../buttons/ButtonIcon.vue";
 import FileUpload from "primevue/fileupload";
 import Dialog from "primevue/dialog";
-import Button from "primevue/button";
+import ProgressBar from "primevue/progressbar";
 import { ref } from "vue";
+import { helper } from "@/helpers/helpers";
+import Mutation from "@/models/Mutation";
+import MutationService from "../../services/MutationService";
+import { AxiosResponse } from "axios";
 
-const visible = ref(false);
-const canSave = ref(true);
-const mutations = ref([]);
+const mutationService: MutationService = new MutationService();
 
-// const showModal = () => {
-//   visible.value = true;
-// };
+const dialogVisible = ref(false);
+let mutations: Mutation[] = [];
+const progress = ref(0);
+const stepDescription = ref("");
 
-const closeModal = () => {
-  visible.value = false;
+const showDialog = () => {
+  dialogVisible.value = true;
+};
+
+const closeDialog = async () => {
+  await helper.utils.sleep(3000);
+  dialogVisible.value = false;
+};
+
+const initDialog = () => {
+  mutations = [];
+  progress.value = 0;
 };
 
 const onUpload = async (event: any) => {
-  const file = event.files[0];
-  mutations.value = [];
+  const file: File = event.files[0];
+  initDialog();
+  showDialog();
 
-  visible.value = true;
+  // read excel
+  stepDescription.value = "Exporteer excel data";
+  helper.convert.xlsToJson(mutations, file);
 
-  if (file) {
-    const reader = new FileReader();
+  await helper.utils.sleep(1000);
 
-    reader.onload = (e) => {
-      if (e.target) {
-        /* Parse data */
-        const bstr = e.target.result;
+  progress.value = 33;
 
-        const wb = XLSX.read(bstr, { type: "binary" });
+  // validate data
+  stepDescription.value = "Valideer data";
 
-        /* Get first worksheet */
-        const wsname = wb.SheetNames[0];
-        const ws = wb.Sheets[wsname];
+  await helper.utils.sleep(1000);
 
-        /* Convert array of arrays */
-        const data: any[][] = XLSX.utils.sheet_to_json(ws, { header: 1 });
+  progress.value = 66;
 
-        data.forEach((mutation, i) => {
-          if (i !== 0) {
-            const _mutation = {
-              accountId: null,
-              currency: null,
-              transactionDate: null,
-              interestDate: null,
-              startingSaldo: null,
-              endingSaldo: null,
-              ammount: null,
-              description: null,
-            };
-            _mutation.accountId = mutation[0];
-            _mutation.currency = mutation[1];
-            _mutation.transactionDate = mutation[2];
-            _mutation.interestDate = mutation[3];
-            _mutation.startingSaldo = mutation[4];
-            _mutation.endingSaldo = mutation[5];
-            _mutation.ammount = mutation[6];
-            _mutation.description = mutation[7];
+  // send data to webservice
+  stepDescription.value = "Sla data op";
 
-            console.log(i, _mutation);
+  console.log(JSON.stringify(mutations));
 
-            mutations.value.push(_mutation as never);
-          }
-        });
-      }
-    };
+  await mutationService
+    .create(mutations)
+    .then((response: AxiosResponse<any, any>) => {
+      console.log("then : ", response.data);
+    })
+    .catch((reason: any) => {
+      console.log("catch : ", reason);
+    });
 
-    reader.readAsArrayBuffer(file);
-  }
+  progress.value = 100;
+
+  await closeDialog();
 };
 </script>
 
 <template>
   <div>
-    <!-- <ButtonIcon
-      icon="pi pi-upload"
-      title="Importeer mutaties"
-      @click="showModal"
-    /> -->
-
     <FileUpload
       mode="basic"
       accept=".xls"
@@ -98,19 +86,36 @@ const onUpload = async (event: any) => {
 
     <!-- eslint-disable vue/no-v-model-argument -->
     <Dialog
-      v-model:visible="visible"
+      v-model:visible="dialogVisible"
       modal
       header="Importeer mutaties"
       :style="{ width: '30rem' }"
       :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
-      position="top"
+      position="center"
       :closable="false"
       :dismissableMask="false"
       :closeOnEscape="false"
     >
-      {{ mutations }}
+      <template #header>
+        <div
+          class="flex justify-content-between align-content-end flex-wrap w-full"
+        >
+          <div
+            class="flex align-items-center justify-content-center p-dialog-title"
+          >
+            Importeer mutaties
+          </div>
+          <!-- <div class="flex align-items-center justify-content-center">
+            {{ stepDescription }}
+          </div> -->
+        </div>
+      </template>
 
-      <template #footer>
+      <p>{{ stepDescription }}</p>
+
+      <ProgressBar :value="progress" />
+
+      <!-- <template #footer>
         <Button
           label="Annuleer"
           text
@@ -123,7 +128,7 @@ const onUpload = async (event: any) => {
           @click="closeModal"
           :disabled="canSave"
         />
-      </template>
+      </template> -->
     </Dialog>
   </div>
 </template>
