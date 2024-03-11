@@ -4,4 +4,26 @@
     .p-card-title {
         font-size: 1.1rem;
     }
+
+    &.p-card-mutations-header {
+        .p-card-title {
+            margin:0;
+        }
+        .p-card-content {
+            padding:0;
+        }
+    }
+
+    &.p-card-mutations {
+        .p-card-title {
+            margin: 0;
+        }
+        .p-card-body {
+            padding:0;
+
+            .p-card-content {
+                padding: 0;
+            }
+        }
+    }
 }

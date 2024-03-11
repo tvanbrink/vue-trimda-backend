@@ -1,6 +1,7 @@
 import moment from "moment";
 
 export default class Mutation {
+  id: string;
   lineId: number;
   bankAccountId: number;
   currency: string;
@@ -12,6 +13,7 @@ export default class Mutation {
   description: string;
 
   constructor() {
+    this.id = "";
     this.lineId = 0;
     this.bankAccountId = 0;
     this.currency = "";

@@ -60,7 +60,7 @@ export abstract class BaseService<T> implements IBaseService<T> {
     return await this.request("get", this.url(id));
   }
 
-  public async getAll(): Promise<AxiosResponse<any, any>> {
+  public async getAll(id?: string): Promise<AxiosResponse<any, any>> {
     return await this.request("get", this.url());
   }
 

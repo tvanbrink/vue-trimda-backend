@@ -9,6 +9,10 @@ export default class MutationService extends BaseService<Mutation> {
     return super.get(id);
   }
 
+  getAll(id?: string): Promise<AxiosResponse<any, any>> {
+    return super.get(id);
+  }
+
   create(data: Mutation[]): Promise<AxiosResponse<any, any>> {
     return super.create(data);
   }

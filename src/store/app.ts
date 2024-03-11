@@ -6,14 +6,33 @@ import SettingsService, { Settings } from "../services/SettingsService";
 const userRepo: UserService = new UserService();
 const settingsRepo: SettingsService = new SettingsService();
 
+type State = {
+  user: User | null;
+  settings: Settings | null;
+};
+
 export const useAppStore = defineStore("app", {
-  state: () => ({
-    user: {} as User | null,
-    settings: {} as Settings | null,
-  }),
+  state: () =>
+    ({
+      user: null,
+      settings: {},
+    } as State),
   getters: {
-    getUser: (state: { user: any }) => state.user,
-    getSettings: (state: { settings: any }) => state.settings,
+    getUser: (state: State) => state.user,
+    getSettings: (state: State) => state.settings,
+    getDefaultAccountId(state: State): string {
+      let accountId: string = "";
+
+      if (state.user) {
+        state.user?.accounts.forEach((account) => {
+          if (account.primary) {
+            accountId = account.id;
+          }
+        });
+      }
+
+      return accountId;
+    },
   },
   actions: {
     async setUser() {

@@ -10,4 +10,27 @@ body {
     // max-height: 100vh;
     margin:0;
     background-color: var(--surface-100) !important;
+    color:#4b5563;
+}
+
+.mutation-list {
+    li {
+        &:not(:last-child) {
+            border-bottom: 1px solid var(--surface-100) !important;
+        }
+      
+        &:hover {
+            &:first-child {
+                border-top-right-radius: 6px;
+                border-top-left-radius: 6px;
+            }
+            &:last-child {
+                border-bottom-right-radius: 6px;
+                border-bottom-left-radius: 6px;
+            }
+
+            background-color:var(--surface-50) !important;
+            cursor: pointer;
+        }
+    }
 }
