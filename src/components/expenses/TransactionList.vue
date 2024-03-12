@@ -6,16 +6,14 @@ import { usePageExpensesStore } from "@/store/pageExpenses";
 import MutationComponent from "./MutationComponent.vue";
 import Mutation from "@/models/Mutation";
 import Sidebar from "primevue/sidebar";
+import MutationDetails from "./MutationDetails.vue";
 
 const expenseStore = usePageExpensesStore();
-const visible = ref(true);
+const sidebarOpen = ref(false);
 
-const onMutationClickHandler = (mutation: Mutation) => {
-  expenseStore.setSelectedMutation(mutation);
-};
-
-const openMutationDetails = () => {
-  visible.value = true;
+const onMutationClickHandler = async (mutation: Mutation) => {
+  await expenseStore.setSelectedMutation(mutation);
+  sidebarOpen.value = true;
 };
 
 onMounted(async () => {
@@ -62,18 +60,20 @@ onMounted(async () => {
       </template>
     </Card>
 
-    <Sidebar header="Sidebar">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat.
-      </p>
-    </Sidebar>
-    <Button icon="pi pi-arrow-right" @click="openMutationDetails()"
-      >test</Button
+    <!-- eslint-disable vue/no-v-model-argument -->
+    <Sidebar
+      v-model:visible="sidebarOpen"
+      header="Mutation details"
+      class="w-full md:w-20rem lg:w-30rem"
+      position="right"
+      @hide="expenseStore.clearSelectedMutation()"
     >
-    {{ expenseStore.getSelectedMutation }}
+      <!-- eslint-enable vue/no-v-model-argument -->
+      <MutationDetails
+        :open="sidebarOpen"
+        :mutation="expenseStore.getSelectedMutation"
+      />
+    </Sidebar>
   </div>
 </template>
 
