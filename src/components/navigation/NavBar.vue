@@ -38,8 +38,14 @@ onMounted(() => {
     <NavDesktop v-if="!isMobile" @sidebarOpen="onSidebarOpenHandler" />
     <NavMobile v-else @sidebarOpen="onSidebarOpenHandler" />
 
-    <!-- eslint-disable-next-line vue/no-v-model-argument -->
-    <Sidebar v-model:visible="sidebarOpen" header="Menu" style="width: 16rem">
+    <!-- eslint-disable vue/no-v-model-argument -->
+    <Sidebar
+      id="sidebar"
+      v-model:visible="sidebarOpen"
+      header="Menu"
+      style="width: 16rem"
+    >
+      <!-- eslint-enable vue/no-v-model-argument -->
       <SideBarMenu @navigate="onNavigateHandler" />
     </Sidebar>
   </div>

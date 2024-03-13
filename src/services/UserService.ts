@@ -2,7 +2,7 @@ import { BaseService } from "./BaseService";
 
 export interface User {
   id: string;
-  accounts: Account[];
+  bankAccounts: Account[];
   active: boolean;
   admin: boolean;
   developer: boolean;

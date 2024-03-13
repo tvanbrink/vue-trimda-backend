@@ -1,27 +1,10 @@
 <script setup lang="ts">
 import Mutation from "@/models/Mutation";
-import moment from "moment";
+import { helper } from "@/helpers/helpers";
 
 defineProps<{
   mutation: Mutation;
 }>();
-
-const dateTime = (date: Date): string => {
-  return moment(date).locale("nl").format("ddd D MMMM").replace(".", "");
-};
-
-const formatNumber = (number: Number): string => {
-  // return number.toLocaleString();
-  return number
-    .toLocaleString(undefined, {
-      currency: "EUR",
-      useGrouping: true,
-      // style: "currency",
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })
-    .replace("-", "- ");
-};
 </script>
 
 <template>
@@ -33,13 +16,17 @@ const formatNumber = (number: Number): string => {
             <p class="pb-1 m-0 font-medium">Crediteur</p>
           </div>
           <div class="flex">
-            <p class="m-0 text-xs">{{ dateTime(mutation.transactionDate) }}</p>
+            <p class="m-0 text-xs">
+              {{
+                helper.format.dateTime(mutation.transactionDate, "ddd D MMMM")
+              }}
+            </p>
           </div>
         </div>
       </div>
       <div class="flex align-items-center justify-content-center">
         <p class="m-0 p-0 text-sm font-medium">
-          {{ formatNumber(mutation.ammount) }}
+          {{ helper.format.toCurrency(mutation.ammount, false) }}
         </p>
       </div>
     </div>

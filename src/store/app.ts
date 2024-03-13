@@ -20,11 +20,11 @@ export const useAppStore = defineStore("app", {
   getters: {
     getUser: (state: State) => state.user,
     getSettings: (state: State) => state.settings,
-    getDefaultAccountId(state: State): string {
+    getDefaultBankAccountId(state: State): string {
       let accountId: string = "";
 
       if (state.user) {
-        state.user?.accounts.forEach((account) => {
+        state.user?.bankAccounts.forEach((account) => {
           if (account.primary) {
             accountId = account.id;
           }

@@ -28,7 +28,7 @@ export const usePageExpensesStore = defineStore("pageExpenses", {
   },
   actions: {
     async init() {
-      this.selectedAccountId = appStore.getDefaultAccountId;
+      this.selectedAccountId = appStore.getDefaultBankAccountId;
       await this.setMutations();
     },
     async setSelectedAccount(accountId: string) {

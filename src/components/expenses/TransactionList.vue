@@ -63,8 +63,8 @@ onMounted(async () => {
     <!-- eslint-disable vue/no-v-model-argument -->
     <Sidebar
       v-model:visible="sidebarOpen"
-      header="Mutation details"
-      class="w-full md:w-20rem lg:w-30rem"
+      header="Mutatie details"
+      class="p-sidebar-mutation w-full md:w-20rem lg:w-30rem"
       position="right"
       @hide="expenseStore.clearSelectedMutation()"
     >
