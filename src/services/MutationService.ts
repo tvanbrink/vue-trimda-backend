@@ -9,8 +9,9 @@ export default class MutationService extends BaseService<Mutation> {
     return super.get(id);
   }
 
-  getAll(id?: string): Promise<AxiosResponse<any, any>> {
-    return super.get(id);
+  async getAll(id?: string): Promise<AxiosResponse<any, any>> {
+    this.collection = "bankaccount/" + id + "/mutation";
+    return await super.get();
   }
 
   create(data: Mutation[]): Promise<AxiosResponse<any, any>> {

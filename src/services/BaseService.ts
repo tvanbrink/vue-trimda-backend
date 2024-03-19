@@ -29,7 +29,7 @@ export class ApiResponse<T> {
 // };
 
 export abstract class BaseService<T> implements IBaseService<T> {
-  protected collection: string | undefined;
+  collection: string | undefined;
 
   private url(id?: string): string {
     return (
