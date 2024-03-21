@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { defineStore } from "pinia";
 import UserService, { User } from "../services/UserService";
 import SettingsService, { Settings } from "../services/SettingsService";
+import BankAccount from "@/models/BankAccount";
 
 const userRepo: UserService = new UserService();
 const settingsRepo: SettingsService = new SettingsService();
@@ -20,6 +21,20 @@ export const useAppStore = defineStore("app", {
   getters: {
     getUser: (state: State) => state.user,
     getSettings: (state: State) => state.settings,
+    getDefaultBankAccount(state: State): BankAccount {
+      let bankAccount: any;
+
+      if (state.user) {
+        state.user?.bankAccounts.forEach((_account) => {
+          if (_account.primary) {
+            bankAccount = _account;
+          }
+        });
+      }
+
+      return bankAccount;
+    },
+
     getDefaultBankAccountId(state: State): string {
       let accountId: string = "";
 

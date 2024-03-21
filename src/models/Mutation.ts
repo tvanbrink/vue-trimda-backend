@@ -1,4 +1,7 @@
 import moment from "moment";
+import Bankaccount from "./BankAccount";
+import BankAccountCategory from "./BankAccountCategory";
+import BankAccountCreditor from "./BankAccountCreditor";
 
 export default class Mutation {
   id: string;
@@ -11,6 +14,9 @@ export default class Mutation {
   endingSaldo: number;
   ammount: number;
   description: string;
+  bankAccount: Bankaccount | null;
+  category: BankAccountCategory | null;
+  creditor: BankAccountCreditor | null;
 
   constructor() {
     this.id = "";
@@ -23,6 +29,9 @@ export default class Mutation {
     this.endingSaldo = 0;
     this.ammount = 0;
     this.description = "";
+    this.bankAccount = null;
+    this.category = null;
+    this.creditor = null;
   }
 
   fromArray(lineId: number, mutation: any[]) {

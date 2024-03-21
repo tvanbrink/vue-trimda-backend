@@ -3,13 +3,15 @@ import { defineStore } from "pinia";
 import Mutation from "@/models/Mutation";
 import MutationService from "@/services/MutationService";
 import { useAppStore } from "./app";
+import Bankaccount from "@/models/BankAccount";
+import DropDownOption from "@/models/DropDownOption";
 
 const appStore = useAppStore();
 
 const mutationRepo: MutationService = new MutationService();
 
 type State = {
-  selectedAccountId: string;
+  selectedBankAccount: Bankaccount | null;
   selectedMutation: Mutation | null;
   mutations: Mutation[];
 };
@@ -17,22 +19,25 @@ type State = {
 export const usePageExpensesStore = defineStore("pageExpenses", {
   state: () =>
     ({
-      selectedAccountId: "",
+      selectedBankAccount: null,
       selectedMutation: null,
       mutations: [],
     } as State),
   getters: {
-    getSelectedAccountId: (state: State) => state.selectedAccountId,
+    getSelectedBankAccount: (state: State) => state.selectedBankAccount,
+    getBankAccountCreditors: (state: State) =>
+      state.selectedBankAccount?.bankAccountCreditors,
+
     getSelectedMutation: (state: State) => state.selectedMutation,
     getMutations: (state: State) => state.mutations,
   },
   actions: {
     async init() {
-      this.selectedAccountId = appStore.getDefaultBankAccountId;
+      this.selectedBankAccount = appStore.getDefaultBankAccount;
       await this.setMutations();
     },
-    async setSelectedAccount(accountId: string) {
-      this.selectedAccountId = accountId;
+    async setSelectedBankAccount(account: Bankaccount) {
+      this.selectedBankAccount = account;
     },
     async setSelectedMutation(mutation: Mutation) {
       this.selectedMutation = mutation;
@@ -41,9 +46,9 @@ export const usePageExpensesStore = defineStore("pageExpenses", {
       this.selectedMutation = null;
     },
     async setMutations() {
-      if (this.selectedAccountId) {
+      if (this.selectedBankAccount) {
         await mutationRepo
-          .getAll(this.selectedAccountId)
+          .getAll(this.selectedBankAccount?.id)
           .then((response: AxiosResponse<any, any>) => {
             this.mutations = response.data;
           })

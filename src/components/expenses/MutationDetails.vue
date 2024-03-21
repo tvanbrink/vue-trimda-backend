@@ -2,20 +2,31 @@
 import Mutation from "@/models/Mutation";
 import { helper } from "@/helpers/helpers";
 import Dropdown from "primevue/dropdown";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { usePageExpensesStore } from "@/store/pageExpenses";
+import DropDownOption from "@/models/DropDownOption";
 
-defineProps<{
-  mutation: Mutation | null;
-}>();
+const expenseStore = usePageExpensesStore();
 
-const selectedCity = ref();
-const cities = ref([
-  { name: "New York", code: "NY" },
-  { name: "Rome", code: "RM" },
-  { name: "London", code: "LDN" },
-  { name: "Istanbul", code: "IST" },
-  { name: "Paris", code: "PRS" },
-]);
+const selectedCreditor = ref<DropDownOption>();
+const optionsCreditor = ref<DropDownOption[]>([]);
+const mutation = ref<Mutation | null>();
+
+onMounted(() => {
+  mutation.value = expenseStore.getSelectedMutation;
+
+  expenseStore.getBankAccountCreditors?.forEach((creditor) => {
+    optionsCreditor.value.push({
+      name: creditor.name,
+      code: creditor.id,
+    });
+  });
+
+  selectedCreditor.value = {
+    name: expenseStore.getSelectedMutation?.creditor?.name,
+    code: expenseStore.getSelectedMutation?.creditor?.id,
+  };
+});
 </script>
 
 <template>
@@ -30,13 +41,10 @@ const cities = ref([
 
     <p>Crediteur</p>
     <Dropdown
-      v-model="selectedCity"
-      :options="cities"
-      showClear
+      v-model="selectedCreditor"
+      :options="optionsCreditor"
       optionLabel="name"
       placeholder="Selecteer crediteur"
     />
-
-    <!-- <div>{{ mutation }}</div> -->
   </div>
 </template>
