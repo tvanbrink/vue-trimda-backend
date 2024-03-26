@@ -27,7 +27,8 @@ export const usePageExpensesStore = defineStore("pageExpenses", {
     getSelectedBankAccount: (state: State) => state.selectedBankAccount,
     getBankAccountCreditors: (state: State) =>
       state.selectedBankAccount?.bankAccountCreditors,
-
+    getBankAccountCategories: (state: State) =>
+      state.selectedBankAccount?.bankAccountCategories,
     getSelectedMutation: (state: State) => state.selectedMutation,
     getMutations: (state: State) => state.mutations,
   },
