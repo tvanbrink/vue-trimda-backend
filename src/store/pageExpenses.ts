@@ -5,10 +5,12 @@ import MutationService from "@/services/MutationService";
 import { useAppStore } from "./app";
 import Bankaccount from "@/models/BankAccount";
 import DropDownOption from "@/models/DropDownOption";
+import BankAccountCreditor from "@/models/BankAccountCreditor";
+import BankAccountCategory from "@/models/BankAccountCategory";
 
 const appStore = useAppStore();
 
-const mutationRepo: MutationService = new MutationService();
+const mutationService: MutationService = new MutationService();
 
 type State = {
   selectedBankAccount: Bankaccount | null;
@@ -24,11 +26,11 @@ export const usePageExpensesStore = defineStore("pageExpenses", {
       mutations: [],
     } as State),
   getters: {
-    getSelectedBankAccount: (state: State) => state.selectedBankAccount,
     getBankAccountCreditors: (state: State) =>
       state.selectedBankAccount?.bankAccountCreditors,
     getBankAccountCategories: (state: State) =>
       state.selectedBankAccount?.bankAccountCategories,
+    getSelectedBankAccount: (state: State) => state.selectedBankAccount,
     getSelectedMutation: (state: State) => state.selectedMutation,
     getMutations: (state: State) => state.mutations,
   },
@@ -36,6 +38,9 @@ export const usePageExpensesStore = defineStore("pageExpenses", {
     async init() {
       this.selectedBankAccount = appStore.getDefaultBankAccount;
       await this.setMutations();
+    },
+    async reload() {
+      await this.init();
     },
     async setSelectedBankAccount(account: Bankaccount) {
       this.selectedBankAccount = account;
@@ -48,7 +53,7 @@ export const usePageExpensesStore = defineStore("pageExpenses", {
     },
     async setMutations() {
       if (this.selectedBankAccount) {
-        await mutationRepo
+        await mutationService
           .getAll(this.selectedBankAccount?.id)
           .then((response: AxiosResponse<any, any>) => {
             this.mutations = response.data;
@@ -56,6 +61,42 @@ export const usePageExpensesStore = defineStore("pageExpenses", {
           .catch((reason: any) => {
             console.log("Error", reason);
           });
+      }
+    },
+    async saveMutation() {
+      if (this.selectedMutation) {
+        await mutationService
+          .update(this.selectedMutation.id, this.selectedMutation)
+          .then((response: AxiosResponse<any, any>) => {
+            console.log(response);
+          })
+          .catch((reason: any) => {
+            console.log("Error", reason);
+          });
+      }
+    },
+    setCreditor(option: DropDownOption): BankAccountCreditor | null {
+      const creditor = this.selectedBankAccount?.bankAccountCreditors.find(
+        (c) => c.id === option.code
+      );
+
+      if (this.selectedMutation) {
+        this.selectedMutation.creditor = creditor ?? null;
+      }
+
+      return creditor ?? null;
+    },
+    setCategory(option: DropDownOption | undefined) {
+      if (this.selectedMutation) {
+        let category: BankAccountCategory | undefined = undefined;
+
+        if (option) {
+          category = this.selectedBankAccount?.bankAccountCategories.find(
+            (c) => c.id === option.code
+          );
+        }
+
+        this.selectedMutation.category = category ? category : null;
       }
     },
   },

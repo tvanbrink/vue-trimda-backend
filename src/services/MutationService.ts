@@ -17,4 +17,12 @@ export default class MutationService extends BaseService<Mutation> {
   create(data: Mutation[]): Promise<AxiosResponse<any, any>> {
     return super.create(data);
   }
+
+  async update(
+    id: string,
+    mutation: Mutation
+  ): Promise<AxiosResponse<any, any>> {
+    this.collection = "mutation";
+    return await super.update(id, mutation);
+  }
 }

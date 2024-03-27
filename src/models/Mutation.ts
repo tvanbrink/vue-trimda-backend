@@ -16,7 +16,7 @@ export default class Mutation {
   description: string;
   bankAccount: Bankaccount | null;
   category: BankAccountCategory | null;
-  creditor: BankAccountCreditor | null;
+  creditor!: BankAccountCreditor | null;
 
   constructor() {
     this.id = "";

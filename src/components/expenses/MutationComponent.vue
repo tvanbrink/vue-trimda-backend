@@ -13,7 +13,11 @@ defineProps<{
       <div class="flex align-items-center justify-content-center">
         <div class="flex flex-column">
           <div class="flex">
-            <p class="pb-1 m-0 font-medium">Crediteur</p>
+            <p class="pb-1 m-0 font-medium">
+              {{
+                mutation.creditor?.name ?? mutation.description.substring(0, 50)
+              }}
+            </p>
           </div>
           <div class="flex">
             <p class="m-0 text-xs">

@@ -16,6 +16,11 @@ const onMutationClickHandler = async (mutation: Mutation) => {
   sidebarOpen.value = true;
 };
 
+const mutationSavedHandler = async () => {
+  sidebarOpen.value = false;
+  await expenseStore.reload();
+};
+
 onMounted(async () => {
   await expenseStore.init();
 });
@@ -72,6 +77,7 @@ onMounted(async () => {
       <MutationDetails
         :open="sidebarOpen"
         :mutation="expenseStore.getSelectedMutation"
+        @mutation-saved="mutationSavedHandler"
       />
     </Sidebar>
   </div>
