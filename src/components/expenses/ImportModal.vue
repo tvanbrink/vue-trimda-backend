@@ -6,7 +6,9 @@ import { ref } from "vue";
 import { helper } from "@/helpers/helpers";
 import Mutation from "@/models/Mutation";
 import MutationService from "../../services/MutationService";
-import { AxiosResponse } from "axios";
+import { usePageExpensesStore } from "@/store/pageExpenses";
+
+const expenseStore = usePageExpensesStore();
 
 const mutationService: MutationService = new MutationService();
 
@@ -52,12 +54,10 @@ const onUpload = async (event: any) => {
   // send data to webservice
   stepDescription.value = "Sla data op";
 
-  console.log(JSON.stringify(mutations));
-
   await mutationService
     .create(mutations)
-    .then((response: AxiosResponse<any, any>) => {
-      console.log("then : ", response.data);
+    .then(async () => {
+      await expenseStore.reload();
     })
     .catch((reason: any) => {
       console.log("catch : ", reason);

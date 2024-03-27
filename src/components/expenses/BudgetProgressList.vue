@@ -3,6 +3,9 @@ import Card from "primevue/card";
 import ButtonIcon from "../buttons/ButtonIcon.vue";
 import BudgetProgressItem from "./BudgetProgressItem.vue";
 import BudgetItem from "../../models/BudgetItem";
+import { usePageExpensesStore } from "@/store/pageExpenses";
+
+const expenseStore = usePageExpensesStore();
 
 const budgetItems: BudgetItem[] = [
   {
@@ -14,8 +17,8 @@ const budgetItems: BudgetItem[] = [
   },
 ];
 
-const clickRefreshHandler = () => {
-  alert("Ververs de budgetten dan!");
+const clickRefreshHandler = async () => {
+  await expenseStore.reload();
 };
 </script>
 
