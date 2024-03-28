@@ -2,20 +2,9 @@
 import Card from "primevue/card";
 import ButtonIcon from "../buttons/ButtonIcon.vue";
 import BudgetProgressItem from "./BudgetProgressItem.vue";
-import BudgetItem from "../../models/BudgetItem";
 import { usePageExpensesStore } from "@/store/pageExpenses";
 
 const expenseStore = usePageExpensesStore();
-
-const budgetItems: BudgetItem[] = [
-  {
-    id: "1",
-    description: "Verzekeringen",
-    targetValue: 100,
-    consumedValue: 25,
-    consumedPercentage: 25,
-  },
-];
 
 const clickRefreshHandler = async () => {
   await expenseStore.reload();
@@ -44,8 +33,11 @@ const clickRefreshHandler = async () => {
     <!-- <template #subtitle>Card subtitle</template> -->
     <template #content>
       <ul class="list-none p-0">
-        <li v-for="item in budgetItems" v-bind:key="item.id">
-          <BudgetProgressItem :item="item" />
+        <li
+          v-for="item in expenseStore.getSelectedBankAccountGoals"
+          v-bind:key="item.id"
+        >
+          <BudgetProgressItem :goal="item" />
         </li>
       </ul>
     </template>

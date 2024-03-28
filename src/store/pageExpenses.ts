@@ -7,6 +7,7 @@ import Bankaccount from "@/models/BankAccount";
 import DropDownOption from "@/models/DropDownOption";
 import BankAccountCreditor from "@/models/BankAccountCreditor";
 import BankAccountCategory from "@/models/BankAccountCategory";
+import BankAccountGoal from "@/models/BankAccountGoals";
 
 const appStore = useAppStore();
 
@@ -15,6 +16,7 @@ const mutationService: MutationService = new MutationService();
 type State = {
   selectedBankAccount: Bankaccount | null;
   selectedMutation: Mutation | null;
+  bankAccountGoals: BankAccountGoal[] | null;
   mutations: Mutation[];
 };
 
@@ -23,20 +25,23 @@ export const usePageExpensesStore = defineStore("pageExpenses", {
     ({
       selectedBankAccount: null,
       selectedMutation: null,
+      bankAccountGoals: null,
       mutations: [],
     } as State),
   getters: {
+    getSelectedBankAccount: (state: State) => state.selectedBankAccount,
     getBankAccountCreditors: (state: State) =>
       state.selectedBankAccount?.bankAccountCreditors,
     getBankAccountCategories: (state: State) =>
       state.selectedBankAccount?.bankAccountCategories,
-    getSelectedBankAccount: (state: State) => state.selectedBankAccount,
+    getSelectedBankAccountGoals: (state: State) => state.bankAccountGoals,
     getSelectedMutation: (state: State) => state.selectedMutation,
     getMutations: (state: State) => state.mutations,
   },
   actions: {
     async init() {
       this.selectedBankAccount = appStore.getDefaultBankAccount;
+      await this.setGoals();
       await this.setMutations();
     },
     async reload() {
@@ -54,9 +59,21 @@ export const usePageExpensesStore = defineStore("pageExpenses", {
     async setMutations() {
       if (this.selectedBankAccount) {
         await mutationService
-          .getAll(this.selectedBankAccount?.id)
+          .getAll(this.selectedBankAccount.id)
           .then((response: AxiosResponse<any, any>) => {
             this.mutations = response.data;
+          })
+          .catch((reason: any) => {
+            console.log("Error", reason);
+          });
+      }
+    },
+    async setGoals() {
+      if (this.selectedBankAccount) {
+        await mutationService
+          .getGoals(this.selectedBankAccount.id, "032024")
+          .then((response: AxiosResponse<any, any>) => {
+            this.bankAccountGoals = response.data;
           })
           .catch((reason: any) => {
             console.log("Error", reason);
